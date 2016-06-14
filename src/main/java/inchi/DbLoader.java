@@ -1,6 +1,6 @@
-package ichi;
+package inchi;
 
-import ichi.exception.TerminateApplication;
+import inchi.exception.TerminateApplication;
 import org.apache.http.client.fluent.Request;
 
 import java.io.File;
@@ -11,9 +11,9 @@ import java.util.zip.GZIPInputStream;
 
 public class DbLoader {
 
-    public static final String ICHI_FILE_NAME = "chembl_21_chemreps-215162561526.txt.gz";
+    public static final String INCHI_FILE_NAME = "chembl_21_chemreps-215162561526.txt.gz";
 
-    public static InputStream load(IchiConfig config) throws IOException {
+    public static InputStream load(InchiConfig config) throws IOException {
         InputStream is;
         File file;
         if (config.isHttpDbUrl) {
@@ -27,7 +27,7 @@ public class DbLoader {
             if (!tempDir.canWrite()) {
                 throw new IllegalStateException("Temp dir defined in system property 'java.io.tmpdir' isn't writtable");
             }
-            file = new File(tempDir, ICHI_FILE_NAME);
+            file = new File(tempDir, INCHI_FILE_NAME);
             boolean isLoadFromWeb = true;
             if (file.exists()) {
                 if (config.isReloadDb) {
@@ -36,7 +36,7 @@ public class DbLoader {
                     } catch (Throwable th) {
                         System.out.print("Can delete cached file " + file.getName() + ". Will be used new temporary file.");
                         // createTempFile(String prefix, String suffix, File directory)
-                        file = File.createTempFile("ichi-" + System.nanoTime(), ".gz", tempDir);
+                        file = File.createTempFile("inchi-" + System.nanoTime(), ".gz", tempDir);
                     }
                 } else {
                     System.out.println("Cached file " + file.getAbsolutePath() + " already exists.");

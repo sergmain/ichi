@@ -1,4 +1,4 @@
-package ichi;
+package inchi;
 
 import org.apache.commons.io.LineIterator;
 
@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 public class ReadGz {
 
     public static void main(String[] args) throws IOException {
-        IchiConfig config = new IchiConfig();
+        InchiConfig config = new InchiConfig();
         if (!config.init(args)) {
             return;
         }

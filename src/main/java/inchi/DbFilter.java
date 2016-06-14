@@ -1,4 +1,4 @@
-package ichi;
+package inchi;
 
 import org.apache.commons.io.LineIterator;
 
@@ -12,7 +12,7 @@ public class DbFilter {
 
     public static class DbSortedList {
         public final int nameLength;
-        public LinkedList<IchiBean> list = new LinkedList<>();
+        public LinkedList<InchiBean> list = new LinkedList<>();
 
         public DbSortedList(int nameLength) {
             this.nameLength = nameLength;
@@ -29,7 +29,7 @@ public class DbFilter {
             this.targetSize = targetSize;
         }
 
-        public void put(IchiBean bean) {
+        public void put(InchiBean bean) {
             int len = bean.substring.length();
             DbSortedList tmp = null;
             for (DbSortedList dbSortedList : list) {
@@ -81,8 +81,8 @@ public class DbFilter {
         }
     };
 
-    public static List<IchiBean> find(IchiConfig config, DictIndex dictIndex) throws IOException {
-        List<IchiBean> result = new ArrayList<>(10000);
+    public static List<InchiBean> find(InchiConfig config, DictIndex dictIndex) throws IOException {
+        List<InchiBean> result = new ArrayList<>(10000);
         InputStream is = DbLoader.load(config);
 
         DbSorter dbSorter = new DbSorter(config.numberOfLines);
@@ -95,7 +95,7 @@ public class DbFilter {
                 continue;
             }
 
-            IchiBean bean = create(line, dictIndex);
+            InchiBean bean = create(line, dictIndex);
             if (bean==null) {
                 continue;
             }
@@ -105,20 +105,20 @@ public class DbFilter {
         Collections.sort(dbSorter.list, DB_SORTED_LIST_COMPARATOR);
 
         for (DbSortedList dbSortedList : dbSorter.list) {
-            for (IchiBean ichiBean : dbSortedList.list) {
-                result.add(ichiBean);
+            for (InchiBean inchiBean : dbSortedList.list) {
+                result.add(inchiBean);
             }
         }
         return result;
     }
 
-    private static IchiBean create(String line, DictIndex dictIndex) {
+    private static InchiBean create(String line, DictIndex dictIndex) {
 /*
         int idx = line.indexOf('\t');
         int i2 = line.indexOf('\t', idx+1);
         int i3 = line.indexOf('\t', i2+1);
         String key = line.substring(i3 + 1);
-        IchiBean bean = new IchiBean(line.substring(0, idx), key.trim());
+        InchiBean bean = new InchiBean(line.substring(0, idx), key.trim());
 */
         // for chembl_id
         int idx = line.indexOf('\t');
@@ -153,7 +153,7 @@ public class DbFilter {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw e;
         }
-        return new IchiBean( line.substring(0, idx), key, substring);
+        return new InchiBean( line.substring(0, idx), key, substring);
 
     }
 

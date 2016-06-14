@@ -1,18 +1,18 @@
-package ichi;
+package inchi;
 
-import ichi.exception.TerminateApplication;
+import inchi.exception.TerminateApplication;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
-public class Ichi {
+public class Inchi {
 
     public static void main(String[] args) throws IOException {
 
         try {
-            IchiConfig config = new IchiConfig();
+            InchiConfig config = new InchiConfig();
             if (!config.init(args)) {
                 return;
             }
@@ -24,15 +24,15 @@ public class Ichi {
             is.close();
             System.out.println("Done.");
 
-            Iterator<IchiBean> it;
-            List<IchiBean> beans = DbFilter.find(config, dictIndex);
+            Iterator<InchiBean> it;
+            List<InchiBean> beans = DbFilter.find(config, dictIndex);
             it = beans.iterator();
 
-//          it = ichi.SomeTrash.getIterator();
+//          it = inchi.SomeTrash.getIterator();
             System.out.println("\n\n");
             while (it.hasNext()) {
-                IchiBean ichiBean = it.next();
-                System.out.println( String.format("%s, %s, %s", ichiBean.key, dictIndex.findString(ichiBean.key), ichiBean.compound ));
+                InchiBean inchiBean = it.next();
+                System.out.println( String.format("%s, %s, %s", inchiBean.key, dictIndex.findString(inchiBean.key), inchiBean.compound ));
             }
         } catch (TerminateApplication e) {
             // do nothing

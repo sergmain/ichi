@@ -1,6 +1,6 @@
-package ichi;
+package inchi;
 
-import ichi.exception.TerminateApplication;
+import inchi.exception.TerminateApplication;
 import org.apache.http.client.fluent.Request;
 
 import java.io.File;
@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class DictionaryLoader {
 
-    public static InputStream load(IchiConfig config) throws IOException {
+    public static InputStream load(InchiConfig config) throws IOException {
         InputStream is;
         File file;
         if (config.isHttpDictUrl) {
@@ -25,7 +25,7 @@ public class DictionaryLoader {
                 throw new IllegalStateException("Temp dir defined in system property 'java.io.tmpdir' isn't writtable");
             }
             // createTempFile(String prefix, String suffix, File directory)
-            file = File.createTempFile("ichi-dictionary-" + System.nanoTime(), ".txt", tempDir);
+            file = File.createTempFile("inchi-dictionary-" + System.nanoTime(), ".txt", tempDir);
             try {
                 Request.Get(config.dictUrl)
     //                    .viaProxy(new HttpHost("myproxy", 8080))

@@ -1,4 +1,4 @@
-package ichi.exception;
+package inchi.exception;
 
 public class TerminateApplication extends RuntimeException {
 }

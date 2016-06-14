@@ -1,8 +1,8 @@
-package ichi;
+package inchi;
 
 import org.apache.commons.cli.*;
 
-public class IchiConfig {
+public class InchiConfig {
 
     public static final String URL_DB = "url-db";
     public static final String URL_DICT = "url-dict";
@@ -13,7 +13,7 @@ public class IchiConfig {
     public static final String DEF_URL_DB = "http://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/chembl_21_chemreps.txt.gz";
     public static final String DEF_URL_DICT = "https://raw.githubusercontent.com/jonbcard/scrabble-bot/master/src/dictionary.txt";
 
-    public int numberOfLines;
+    public int numberOfLines = 10;
     public String dbUrl;
     public String dictUrl;
 
@@ -21,7 +21,7 @@ public class IchiConfig {
     public boolean isHttpDictUrl;
     public boolean isReloadDb = false;
 
-    public IchiConfig() {
+    public InchiConfig() {
     }
 
     public void printCurrentSettings() {
@@ -39,13 +39,13 @@ public class IchiConfig {
         // add t option
         options.addOption("h", "help", true, "print this help");
 
-        options.addOption("udb", URL_DB, true, "url for Ichi database file (has higher priority than 'file-db' option)");
-        options.addOption("ud", URL_DICT, true, "url for Ichi dictionary file (has higher priority than 'file-dict' option)");
+        options.addOption("udb", URL_DB, true, "url for Inchi database file (has higher priority than 'file-db' option)");
+        options.addOption("ud", URL_DICT, true, "url for Inchi dictionary file (has higher priority than 'file-dict' option)");
         options.addOption("rl", "reload-db-from-url", true, "true/false, reload file from given url (local copy will be overwritten).");
 
-        options.addOption("fdb", FILE_DB, true, "file for Ichi database file");
-        options.addOption("fd", FILE_DICT, true, "file for Ichi dictionary file");
-        options.addOption("n", true, "number of lines to find. The value has to be greater than 0");
+        options.addOption("fdb", FILE_DB, true, "file for Inchi database file");
+        options.addOption("fd", FILE_DICT, true, "file for Inchi dictionary file");
+        options.addOption("n", true, "number of lines to find. The value has to be greater than 0. Default value 10");
 
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
@@ -130,25 +130,26 @@ public class IchiConfig {
             try {
                 nols = Integer.parseInt(n);
             } catch (NumberFormatException e) {
-                System.out.println("wrong value for param 'n' - "+n+". Must be digit");
-                return false;
+                System.out.println("wrong value for param 'n' - "+n+". Must be digit. Default value will be used.");
+                return true;
             }
         }
 
         if (nols==null) {
             String[] params = commandLine.getArgs();
             if (params==null || params.length==0) {
-                return false;
+                return true;
             }
             try {
                 nols = Integer.parseInt(params[0]);
             } catch (NumberFormatException e) {
-                System.out.println("wrong value for param 'n' - "+params[0]+". Must be digit");
-                return false;
+                System.out.println("wrong value for param 'n' - "+params[0]+". Must be digit. Default value will be used.");
+                return true;
             }
         }
-        if (nols==0) {
-            return false;
+        if (nols < 1) {
+            System.out.println("number of lines must be greater that 0. Default value will be used.");
+            return true;
         }
         this.numberOfLines = nols;
         return true;
@@ -156,6 +157,6 @@ public class IchiConfig {
 
     private static void printHelpOnCli(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp( "Ichi [OPTIONS] [NUMBER_OF_LINES]", options );
+        formatter.printHelp( "Inchi [OPTIONS] [NUMBER_OF_LINES]", options );
     }
 }

@@ -1,4 +1,4 @@
-package ichi;
+package inchi;
 
 import org.apache.commons.io.LineIterator;
 

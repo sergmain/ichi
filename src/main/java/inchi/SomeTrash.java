@@ -1,4 +1,4 @@
-package ichi;
+package inchi;
 
 import org.apache.commons.io.LineIterator;
 
@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class SomeTrash {
 
-    private static Iterator<IchiBean> getIterator(DictIndex dictIndex) throws FileNotFoundException {
-        List<IchiBean> list = new ArrayList<>();
+    private static Iterator<InchiBean> getIterator(DictIndex dictIndex) throws FileNotFoundException {
+        List<InchiBean> list = new ArrayList<>();
         InputStream is = new FileInputStream("docs/data.txt");
 
         LineIterator it = new LineIterator(new InputStreamReader(is, Charset.defaultCharset()));
@@ -28,7 +28,7 @@ public class SomeTrash {
             if (line.isEmpty()) {
                 continue;
             }
-            list.add( new IchiBean("compound", line, dictIndex.findString(line)));
+            list.add( new InchiBean("compound", line, dictIndex.findString(line)));
         }
         return list.iterator();
     }
